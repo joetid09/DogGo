@@ -13,9 +13,9 @@ namespace DogGo.Controllers
     {
         private readonly IWalkerRepository _walkerRepo;
 
-        public WalkersController(IWalkerRepository walkerRepository)
+        public WalkersController(IWalkerRepository WalkerRepository)
         {
-            _walkerRepo = walkerRepository;
+            _walkerRepo = WalkerRepository;
         }
         // GET: WalkersController
         //sets action of Index() so that when it is call in StartUp.cs it will show list of walkers
