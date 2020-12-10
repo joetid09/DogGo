@@ -18,9 +18,10 @@ namespace DogGo.Controllers
             _walkerRepo = walkerRepository;
         }
         // GET: WalkersController
+        //sets action of Index() so that when it is call in StartUp.cs it will show list of walkers
         public ActionResult Index()
         {
-            List<Walker> walkers = _walkerRepo.getAllWalkers();
+            List<Walker> walkers = _walkerRepo.GetAllWalkers();
             return View(walkers);
         }
 

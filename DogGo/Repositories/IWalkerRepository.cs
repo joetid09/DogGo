@@ -6,7 +6,7 @@ namespace DogGo.Repositories
 {
     public interface IWalkerRepository
     {
-        List<Walker> getAllWalkers();
+        List<Walker> GetAllWalkers();
         Walker GetWalkerById(int id);
     }
 }
