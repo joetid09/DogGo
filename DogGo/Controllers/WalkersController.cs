@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DogGo.Repositories;
+using DogGo.Models;
 
 namespace DogGo.Controllers
 {
@@ -19,7 +20,8 @@ namespace DogGo.Controllers
         // GET: WalkersController
         public ActionResult Index()
         {
-            return View();
+            List<Walker> walkers = _walkerRepo.getAllWalkers();
+            return View(walkers);
         }
 
         // GET: WalkersController/Details/5
