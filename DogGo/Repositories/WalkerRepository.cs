@@ -32,8 +32,9 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, [Name], ImageUrl, NeighborhoodId
+                       SELECT Walker.Id as Id, Walker.Name as Name, ImageUrl, NeighborhoodId, Neighborhood.Name as Neighborhood
                         FROM Walker
+                        LEFT JOIN Neighborhood ON Neighborhood.Id = Walker.NeighborhoodId
                     ";
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -41,12 +42,20 @@ namespace DogGo.Repositories
                     List<Walker> walkers = new List<Walker>();
                     while (reader.Read())
                     {
+                        Neighborhood neighborhood = new Neighborhood
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
+                            Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
+                        };
+
                         Walker walker = new Walker
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
+                            Neighborhood = neighborhood
+
                         };
 
                         walkers.Add(walker);
@@ -67,9 +76,10 @@ namespace DogGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, [Name], ImageUrl, NeighborhoodId
+                        SELECT Walker.Id as Id, Walker.Name as Name, ImageUrl, NeighborhoodId, Neighborhood.Name as Neighborhood
                         FROM Walker
-                        WHERE Id = @id
+                        LEFT JOIN Neighborhood ON Neighborhood.Id = Walker.NeighborhoodId
+                        WHERE Walker.Id = @id
                     ";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -78,12 +88,18 @@ namespace DogGo.Repositories
 
                     if (reader.Read())
                     {
+                        Neighborhood neighborhood = new Neighborhood
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
+                            Name = reader.GetString(reader.GetOrdinal("Neighborhood"))
+                        };
                         Walker walker = new Walker
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             ImageUrl = reader.GetString(reader.GetOrdinal("ImageUrl")),
-                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId"))
+                            NeighborhoodId = reader.GetInt32(reader.GetOrdinal("NeighborhoodId")),
+                            Neighborhood = neighborhood
                         };
 
                         reader.Close();
