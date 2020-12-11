@@ -6,41 +6,40 @@ using DogGo.Models;
 
 namespace DogGo.Controllers
 {
-    public class WalkersController : Controller
+    public class OwnersController : Controller
     {
-        private readonly IWalkerRepository _walkerRepo;
+        private readonly IOwnerRepository _ownerRepo;
 
-        public WalkersController(IWalkerRepository WalkerRepository)
+        public OwnersController(IOwnerRepository OwnerRepository)
         {
-            _walkerRepo = WalkerRepository;
+            _ownerRepo = OwnerRepository;
         }
-        // GET: WalkersController
-        //sets action of Index() so that when it is call in StartUp.cs it will show list of walkers
+        // GET: OwnerController1
         public ActionResult Index()
         {
-            List<Walker> walkers = _walkerRepo.GetAllWalkers();
-            return View(walkers);
+            List<Owner> owners = _ownerRepo.GetAllOwners();
+            return View(owners);
         }
 
-        // GET: WalkersController/Details/5
+        // GET: OwnerController1/Details/5
         public ActionResult Details(int id)
         {
-            Walker walker = _walkerRepo.GetWalkerById(id);
-
-            if (walker == null)
+            Owner owner = _ownerRepo.GetOwnerById(id);
+            if(owner  == null)
             {
                 return NotFound();
             }
-            return View(walker);
+
+            return View(owner);
         }
 
-        // GET: WalkersController/Create
+        // GET: OwnerController1/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: WalkersController/Create
+        // POST: OwnerController1/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -55,13 +54,13 @@ namespace DogGo.Controllers
             }
         }
 
-        // GET: WalkersController/Edit/5
+        // GET: OwnerController1/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: WalkersController/Edit/5
+        // POST: OwnerController1/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -76,13 +75,13 @@ namespace DogGo.Controllers
             }
         }
 
-        // GET: WalkersController/Delete/5
+        // GET: OwnerController1/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: WalkersController/Delete/5
+        // POST: OwnerController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
