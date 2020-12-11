@@ -63,22 +63,39 @@ namespace DogGo.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Id, Email, [Name], Address, Phone FROM Owner
-                                        WHERE Id = @id";
+                    cmd.CommandText = @"SELECT Dog.Name as Pet, OwnerId, Owner.Name as Name, Owner.Id as Id, Breed, Email, Address, Phone FROM Owner
+                                        RIGHT JOIN Dog
+                                        ON Owner.Id = Dog.OwnerId
+                                        WHERE Owner.Id = @id";
 
-                    cmd.Parameters.AddWithValue("id", id);
+                    cmd.Parameters.AddWithValue("@id", id);
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if(reader.Read())
                     {
+                            List<Dog> dogs = new List<Dog>();
+                            while(reader.Read())
+                        {
+                            Dog dog = new Dog
+                            {
+                                Name = reader.GetString(reader.GetOrdinal("Dog.Name")),
+                                Breed = reader.GetString(reader.GetOrdinal("Breed"))
+                            };
+                            dogs.Add(dog);
+      
+                        }
+
+                        
+                        
                         Owner owner = new Owner
                         {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Id = reader.GetInt32(reader.GetOrdinal("Owner.Id")),
                             Email = reader.GetString(reader.GetOrdinal("Email")),
                             Name = reader.GetString(reader.GetOrdinal("Name")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
-                            Phone = reader.GetString(reader.GetOrdinal("Phone"))
+                            Phone = reader.GetString(reader.GetOrdinal("Phone")),
+                            Pets = dogs
                         };
                         reader.Close();
                         return owner;
