@@ -52,7 +52,7 @@ namespace DogGo.Controllers
             }
             catch
             {
-                return View();
+                return View(owner);
             }
         }
 
