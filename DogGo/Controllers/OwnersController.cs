@@ -80,16 +80,18 @@ namespace DogGo.Controllers
         // GET: OwnerController1/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Owner owner = _ownerRepo.GetOwnerById(id);
+            return View(owner);
         }
 
         // POST: OwnerController1/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Owner owner)
         {
             try
             {
+                _ownerRepo.DeleteOwner(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
