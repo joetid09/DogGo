@@ -9,11 +9,11 @@ namespace DogGo.Repositories
 
         Owner GetOwnerById(int id);
 
-        public void DeleteOwner();
+        public void DeleteOwner(int ownerId);
 
-        public void UpdateOwner();
+        public void UpdateOwner(Owner owner);
 
-        public void AddOwner();
+        public void AddOwner(Owner owner);
 
     }
 }
