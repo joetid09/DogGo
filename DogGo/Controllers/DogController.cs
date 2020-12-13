@@ -55,7 +55,8 @@ namespace DogGo.Controllers
         // GET: DogController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Dog dog = _dogRepo.GetDogById(id);
+            return View(dog);
         }
 
         // POST: DogController/Edit/5
