@@ -83,7 +83,14 @@ namespace DogGo.Controllers
         public ActionResult Edit(int id)
         {
             Owner owner = _ownerRepo.GetOwnerById(id);
-            return View(owner);
+            List<Neighborhood> neighborhoods = _neighborhoodRepo.GetAll();
+
+            OwnerFormViewModel vm = new OwnerFormViewModel()
+            {
+                Owner = owner,
+                Neighborhood = neighborhoods
+            };
+            return View(vm);
         }
 
         // POST: OwnerController1/Edit/5
@@ -94,11 +101,12 @@ namespace DogGo.Controllers
             try
             {
                 _ownerRepo.UpdateOwner(owner);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
                 return View(owner);
+                
             }
         }
 
