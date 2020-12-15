@@ -138,3 +138,4 @@ C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Ind
 C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Create.cshtml.g.cs
 C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Edit.cshtml.g.cs
 C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Delete.cshtml.g.cs
+C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Details.cshtml.g.cs

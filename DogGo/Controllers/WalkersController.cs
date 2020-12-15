@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using DogGo.Repositories;
 using DogGo.Models;
+using DogGo.Models.ViewModels;
 
 namespace DogGo.Controllers
 {
     public class WalkersController : Controller
     {
         private readonly IWalkerRepository _walkerRepo;
+        private readonly IWalksRepository _walksRepo;
 
-        public WalkersController(IWalkerRepository WalkerRepository)
+        public WalkersController(IWalkerRepository WalkerRepository, IWalksRepository WalksRepository)
         {
             _walkerRepo = WalkerRepository;
+            _walksRepo = WalksRepository;
         }
         // GET: WalkersController
         //sets action of Index() so that when it is call in StartUp.cs it will show list of walkers
@@ -27,11 +30,19 @@ namespace DogGo.Controllers
         {
             Walker walker = _walkerRepo.GetWalkerById(id);
 
+            List<Walks> walks = _walksRepo.GetWalksByWalker(id);
+
+            WalkerProfileViewModel vm = new WalkerProfileViewModel
+            {
+                Walker = walker,
+                Walks = walks
+            };
+
             if (walker == null)
             {
                 return NotFound();
             }
-            return View(walker);
+            return View(vm);
         }
 
         // GET: WalkersController/Create
