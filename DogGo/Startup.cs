@@ -28,13 +28,13 @@ namespace DogGo
             services.AddControllersWithViews();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => options.LoginPath = "/Owners/LogIn");
-            //services.AddControllersWithViews();
+            services.AddControllersWithViews();
             //this service lets the program know about our new repositories
-            //services.AddTransient<IWalkerRepository, WalkerRepository>();
-            //services.AddTransient<IOwnerRepository, OwnerRepository>();
-            //services.AddTransient<IDogRepository, DogRepository>();
-            //services.AddTransient<INeighborhoodRepository, NeighborhoodRepository>();
-            //services.AddTransient<IWalksRepository, WalksRepository>();
+            services.AddTransient<IWalkerRepository, WalkerRepository>();
+            services.AddTransient<IOwnerRepository, OwnerRepository>();
+            services.AddTransient<IDogRepository, DogRepository>();
+            services.AddTransient<INeighborhoodRepository, NeighborhoodRepository>();
+            services.AddTransient<IWalksRepository, WalksRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
