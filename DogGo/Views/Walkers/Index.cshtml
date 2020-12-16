@@ -1,4 +1,4 @@
-﻿@model DogGo.Models.ViewModels.WalkerListViewModel
+﻿@model DogGo.Models.ViewModels.LocalWalkerListViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -31,14 +31,14 @@
                 @item.Name
             </td>
             <td>
-                @*@foreach(Neighborhood neighborhood in Model.Neighborhoods)
+                @foreach(Neighborhood neighborhood in Model.Neighborhoods)
                 {
                     if(neighborhood.Id == item.NeighborhoodId)
                     {
                        <p>@neighborhood.Name</p>
                     }
-                }*@
-                @Model.Neighborhood.Name;
+                }
+               @*@Model.Neighborhood.Name;*@
             </td>
             <td>
                 <img src="@item.ImageUrl" alt="Walker avatar" />

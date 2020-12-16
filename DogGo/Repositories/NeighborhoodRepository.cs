@@ -51,7 +51,7 @@ namespace DogGo.Repositories
                 }
             }
         }
-        public Neighborhood GetNeighborhoodById(int neighborhoodId)
+        public List<Neighborhood> GetNeighborhoodsById(int neighborhoodId)
         {
             using (SqlConnection conn = Connection)
             {
@@ -66,21 +66,26 @@ namespace DogGo.Repositories
 
                     SqlDataReader reader = cmd.ExecuteReader();
 
-                    if (reader.Read())
+                    List<Neighborhood> neighborhoods = new List<Neighborhood>();
+                    if(neighborhoodId == null)
+                    {
+                        reader.Close();
+                        return null;
+                    }
+
+
+                    while (reader.Read())
                     {
                         Neighborhood neighborhood = new Neighborhood
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("Id")),
                             Name = reader.GetString(reader.GetOrdinal("Name"))
                         };
-                        reader.Close();
-                        return neighborhood;
+
+                        neighborhoods.Add(neighborhood);
                     }
-                    else
-                    {
-                        reader.Close();
-                        return null;
-                    }
+                    reader.Close();
+                    return neighborhoods;
                 }
 
                 }

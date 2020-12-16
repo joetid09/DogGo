@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace DogGo.Models.ViewModels
 {
-    public class LocalWalkerListViewModel
+    public class AllWalkerListViewModel
     {
         public List<Walker> Walker { get; set; }
-        public List<Neighborhood> Neighborhoods { get; set; }
+        public List<Neighborhood> Neighborhood { get; set; }
     }
 }

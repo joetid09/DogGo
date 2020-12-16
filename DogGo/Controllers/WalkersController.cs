@@ -5,6 +5,7 @@ using DogGo.Repositories;
 using DogGo.Models;
 using DogGo.Models.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DogGo.Controllers
 {
@@ -26,24 +27,32 @@ namespace DogGo.Controllers
         //sets action of Index() so that when it is call in StartUp.cs it will show list of walkers
         public ActionResult Index()
         {
-            
-            {
 
+            if (User.Identity.IsAuthenticated)
+            {
                 int id = GetCurrentOwner();
                 Owner owner = _ownerRepo.GetOwnerById(id);
                 List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
-                Neighborhood neighborhood = _neighborhoodRepo.GetNeighborhoodById(owner.NeighborhoodId);
+                List<Neighborhood> neighborhood = _neighborhoodRepo.GetNeighborhoodsById(owner.NeighborhoodId);
 
                 LocalWalkerListViewModel vm = new LocalWalkerListViewModel
                 {
                     Walker = walkers,
-                    Neighborhood = neighborhood
+                    Neighborhoods = neighborhood
                 };
 
                 return View(vm);
             } else
-            {   
-                return 
+            {
+                List<Walker> walkers = _walkerRepo.GetAllWalkers();
+               List<Neighborhood> neighborhood = _neighborhoodRepo.GetAll();
+
+                LocalWalkerListViewModel vm = new LocalWalkerListViewModel
+                {
+                    Walker = walkers,
+                    Neighborhoods = neighborhood
+                };
+                return View(vm);
             }
         }
 
@@ -131,7 +140,7 @@ namespace DogGo.Controllers
         }
 
         public int GetCurrentOwner()
-        {
+        {        
             int id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return id;
         }
