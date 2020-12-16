@@ -6,6 +6,7 @@ using System.Linq;
 using DogGo.Repositories;
 using DogGo.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DogGo.Controllers
 {
@@ -20,6 +21,8 @@ namespace DogGo.Controllers
             }
         // GET: DogController
         //added a new helper method called GetCurrentUserID which get the userId from the claims/cookies made in authentication step on ownerController
+        //[Authorize] requires someone to be logged in before be able to see that particular 
+        [Authorize]
         public ActionResult Index()
         {
             int ownerId = GetCurrentUserId();
@@ -44,6 +47,7 @@ namespace DogGo.Controllers
         // POST: DogController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create(Dog dog)
         {
             try
