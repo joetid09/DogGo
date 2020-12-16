@@ -48,6 +48,7 @@ namespace DogGo.Controllers
         {
             try
             {
+                dog.OwnerId = GetCurrentUserId();
                 _dogRepo.AddDog(dog);
                 return RedirectToAction(nameof(Index));
             }
