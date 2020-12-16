@@ -140,3 +140,4 @@ C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Edi
 C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Delete.cshtml.g.cs
 C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Dog\Details.cshtml.g.cs
 C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\Owners\Login.cshtml.g.cs
+C:\Users\josep\workspace\DogGo\DogGo\obj\Debug\netcoreapp3.1\Razor\Views\CustomerErrorViews\index.cshtml.g.cs

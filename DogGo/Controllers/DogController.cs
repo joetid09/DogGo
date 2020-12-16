@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DogGo.Repositories;
 using DogGo.Models;
+using System.Security.Claims;
 
 namespace DogGo.Controllers
 {
@@ -18,9 +19,12 @@ namespace DogGo.Controllers
             _dogRepo = DogRepository;
             }
         // GET: DogController
+        //added a new helper method called GetCurrentUserID which get the userId from the claims/cookies made in authentication step on ownerController
         public ActionResult Index()
         {
-            List<Dog> dogs = _dogRepo.GetAllDogs();
+            int ownerId = GetCurrentUserId();
+
+            List<Dog> dogs = _dogRepo.GetDogsByOwnerId(ownerId);
             return View(dogs);
         }
 
@@ -97,6 +101,13 @@ namespace DogGo.Controllers
             {
                 return View(dog);
             }
+        }
+
+        //goes into the cookies/claims maded during loging/auth, takes the string value from the xml, converts back to int, and returns it
+        public int GetCurrentUserId()
+        {
+            int id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return id;
         }
     }
 }
