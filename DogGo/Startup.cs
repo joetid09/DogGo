@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DogGo.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace DogGo
 {
@@ -24,6 +25,9 @@ namespace DogGo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllersWithViews();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => options.LoginPath = "/Owners/LogIn");
             services.AddControllersWithViews();
             //this service lets the program know about our new repositories
             services.AddTransient<IWalkerRepository, WalkerRepository>();
@@ -51,6 +55,7 @@ namespace DogGo
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

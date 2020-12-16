@@ -14,6 +14,7 @@ namespace DogGo.Repositories
         void UpdateOwner(Owner owner);
 
         void AddOwner(Owner owner);
+        Owner GetOwnerByEmail(string email);
 
     }
 }
