@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DogGo.Models.Walker>
+﻿@model DogGo.Models.ViewModels.LocalWalkerListViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -13,28 +13,35 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Walker
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NeighborhoodId)
+                Neighborhoods
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ImageUrl)
+                Images
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Walker) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @item.Name
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Neighborhood.Name)
+                @foreach(Neighborhood neighborhood in Model.Neighborhoods)
+                {
+                    if(neighborhood.Id == item.NeighborhoodId)
+                    {
+                       <p>@neighborhood.Name</p>
+                    }
+                }
+               @*@Model.Neighborhood.Name;*@
             </td>
             <td>
-                <img src="@item.ImageUrl" alt="avatar" />
+                <img src="@item.ImageUrl" alt="Walker avatar" />
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

@@ -6,5 +6,6 @@ namespace DogGo.Repositories
     public interface INeighborhoodRepository
     {
         List<Neighborhood> GetAll();
+        List<Neighborhood> GetNeighborhoodsById(int neighborhoodId);
     }
 }

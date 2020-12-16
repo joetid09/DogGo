@@ -169,6 +169,10 @@ namespace DogGo.Controllers
                 return View(owner);
             }
         }
-
+        public int GetCurrentOwner()
+        {
+            int id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return id;
+        }
     }
 }

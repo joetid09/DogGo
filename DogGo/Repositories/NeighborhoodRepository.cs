@@ -51,5 +51,45 @@ namespace DogGo.Repositories
                 }
             }
         }
+        public List<Neighborhood> GetNeighborhoodsById(int neighborhoodId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id, Name FROM Neighborhood
+                                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", neighborhoodId);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    List<Neighborhood> neighborhoods = new List<Neighborhood>();
+                    if(neighborhoodId == null)
+                    {
+                        reader.Close();
+                        return null;
+                    }
+
+
+                    while (reader.Read())
+                    {
+                        Neighborhood neighborhood = new Neighborhood
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Name = reader.GetString(reader.GetOrdinal("Name"))
+                        };
+
+                        neighborhoods.Add(neighborhood);
+                    }
+                    reader.Close();
+                    return neighborhoods;
+                }
+
+                }
+            }
+
+        }
     }
-}
