@@ -66,30 +66,49 @@ namespace DogGo.Controllers
         public ActionResult Edit(int id)
         {
             Dog dog = _dogRepo.GetDogById(id);
-            return View(dog);
+            int currentUserId = GetCurrentUserId();
+            if (dog.OwnerId == currentUserId)
+            {
+                return View(dog);
+            }
+            return NotFound();
         }
+                    
+                    
 
         // POST: DogController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Dog dog)
         {
-            try
+            int currentUserId = GetCurrentUserId();
+            if (dog.OwnerId == currentUserId)
             {
-                _dogRepo.UpdateDog(dog);
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _dogRepo.UpdateDog(dog);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    return View(dog);
+                }
             }
-            catch
-            {
-                return View(dog);
-            }
+            return NotFound();
         }
 
         // GET: DogController/Delete/5
         public ActionResult Delete(int id)
+         
         {
+            int currentUserId = GetCurrentUserId();
             Dog dog = _dogRepo.GetDogById(id);
-            return View(dog);
+            if(dog.OwnerId == currentUserId)
+            {
+                return View(dog);
+            }
+
+            return NotFound();
         }
 
         // POST: DogController/Delete/5
@@ -97,7 +116,9 @@ namespace DogGo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, Dog dog)
         {
-            try
+            int currentUserId = GetCurrentUserId();
+            if (dog.OwnerId == currentUserId)
+                try
             {
                 _dogRepo.DeleteDog(id);
                 return RedirectToAction(nameof(Index));
@@ -106,6 +127,7 @@ namespace DogGo.Controllers
             {
                 return View(dog);
             }
+            return NotFound();
         }
 
         //goes into the cookies/claims maded during loging/auth, takes the string value from the xml, converts back to int, and returns it
@@ -114,5 +136,6 @@ namespace DogGo.Controllers
             int id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return id;
         }
+
     }
 }
