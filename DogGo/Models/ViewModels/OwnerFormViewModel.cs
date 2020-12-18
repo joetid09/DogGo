@@ -8,5 +8,6 @@ namespace DogGo.Models.ViewModels
     {
        public Owner Owner { get; set; }
        public List<Neighborhood> Neighborhood { get; set; }
+       public List<Walks> Walks { get; set; }
     }
 }
