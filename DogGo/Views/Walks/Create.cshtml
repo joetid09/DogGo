@@ -1,43 +1,49 @@
-﻿@model DogGo.Models.Walks
+﻿@model DogGo.Models.ViewModels.AppointmentViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>Walks</h4>
+<h1>New Appointment</h1>
+<div class="text-black-50">
+    <h4>Results here: @Html.DisplayFor(model => model.Walker.Name)</h4>
+    </div>
+@*<h4>Let's make an appointment with<span asp-validation-for="Walker"></span></h4>*@
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WalkerId" class="control-label"></label>
-                <input asp-for="WalkerId" class="form-control" />
-                <span asp-validation-for="WalkerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DogId" class="control-label"></label>
-                <input asp-for="DogId" class="form-control" />
-                <span asp-validation-for="DogId" class="text-danger"></span>
-            </div>
 
+            <div class="form-group">
+                <label asp-for="Walker.Name" class="control-label"></label>
+                <input asp-for="Walker.Name" class="form-control" />
+                <span asp-validation-for="Walker.Name" class="text-danger"></span>
+            </div>
+            
+            @*<div class="form-group">
+                <label asp-for="Owner.Address" class="control-label"></label>
+                <input asp-for="Owner.Address" class="form-control" />
+                <span asp-validation-for="Owner.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Owner.NeighborhoodId" class="control-label"></label>
+                <select asp-for="Owner.NeighborhoodId" class="form-control">
+                    <option value="">Select Neighborhood</option>
+                    @foreach (Neighborhood neighborhood in Model.Neighborhood)
+                    {
+                        <option value="@neighborhood.Id">@neighborhood.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Owner.NeighborhoodId" class="text-danger"></span>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
+</div>
+
 </div>
 
 <div>

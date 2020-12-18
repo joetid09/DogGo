@@ -2,7 +2,9 @@
 using DogGo.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Collections.Generic;
+using DogGo.Models.ViewModels;
+using System.Security.Claims;
 
 namespace DogGo.Controllers
 {
@@ -10,10 +12,14 @@ namespace DogGo.Controllers
     public class WalksController : Controller
     {
         private readonly IWalkerRepository _walkerRepository;
+        private readonly IWalksRepository _walksRepository;
+        private readonly IDogRepository _dogRepository;
 
-        public WalksController(IWalkerRepository walkerRepository)
+        public WalksController(IWalksRepository walksRepository, IWalkerRepository walkerRepository, IDogRepository dogRepository)
         {
             _walkerRepository = walkerRepository;
+            _walksRepository = walksRepository;
+            _dogRepository = dogRepository;
         }
         // GET: WalksController
         public ActionResult Index()
@@ -32,17 +38,27 @@ namespace DogGo.Controllers
         public ActionResult Create(int id)
         {
             Walker walker = _walkerRepository.GetWalkerById(id);
-            return View();
+            int ownerId = GetCurrentOwner();
+            List<Dog> dogs = _dogRepository.GetDogsByOwnerId(ownerId);
+
+            AppointmentViewModel avm = new AppointmentViewModel
+            {
+                OwnerId = ownerId,
+                Walker = walker,
+                Dog = dogs
+            };
+            return View(avm);
         }
 
         // POST: WalksController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Walks walk)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                _walksRepository.AddWalk(walk);
+                return RedirectToAction("Details", "Owners");
             }
             catch
             {
@@ -90,6 +106,12 @@ namespace DogGo.Controllers
             {
                 return View();
             }
+        }
+
+        public int GetCurrentOwner()
+        {
+            int id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            return id;
         }
     }
 }
