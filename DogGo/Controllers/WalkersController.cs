@@ -44,7 +44,7 @@ namespace DogGo.Controllers
                 return View(vm);
             } else
             {
-                List<Walker> walkers = _walkerRepo.GetAllWalkers();
+               List<Walker> walkers = _walkerRepo.GetAllWalkers();
                List<Neighborhood> neighborhood = _neighborhoodRepo.GetAll();
 
                 LocalWalkerListViewModel vm = new LocalWalkerListViewModel

@@ -66,10 +66,11 @@ namespace DogGo.Controllers
         }
 
         // GET: OwnerController1/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details()
         {
-            Owner owner = _ownerRepo.GetOwnerById(id);
-            List < Dog > dogs = _dogRepo.GetDogsByOwnerId(id);
+            int ownerId = GetCurrentOwner();
+            Owner owner = _ownerRepo.GetOwnerById(ownerId);
+            List < Dog > dogs = _dogRepo.GetDogsByOwnerId(ownerId);
             List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
 
             ProfileViewModel vm = new ProfileViewModel()

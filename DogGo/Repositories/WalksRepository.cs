@@ -25,6 +25,33 @@ namespace DogGo.Repositories
             }
         }
 
+        public void AddWalk(Walks walk)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"INSERT INTO Walks (Date, WalkerId, DogId, WalkStatusId, WalkerId) 
+                                        OUTPUT INSERTED.ID
+                                        Values (@date, @dogid, @ownerid, @walkstatusid, @walkerid );
+                                        ";
+
+                    cmd.Parameters.AddWithValue("date", walk.Date);
+                    cmd.Parameters.AddWithValue("@dogid", walk.DogId);
+                    cmd.Parameters.AddWithValue("@ownerid", walk.OwnerId);
+                    cmd.Parameters.AddWithValue("walkerid", walk.WalkerId);
+                    cmd.Parameters.AddWithValue("@walkstatusid", 1);
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    walk.Id = id;
+
+                }
+            }
+        }
+
         public List<Walks> GetWalksByWalker(int id)
         {
             using (SqlConnection conn = Connection)
@@ -33,7 +60,7 @@ namespace DogGo.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Walks.Id, Date, Duration, WalkerId, DogId, Owner.Name as OwnerName From Walks
+                    cmd.CommandText = @"SELECT Walks.Id, Date, Duration, WalkerId, DogId, Owner.Id as OwnerId From Walks
                                         LEFT JOIN Dog
                                         ON Dog.Id = Walks.DogId
                                         LEFT JOIN Owner
@@ -55,7 +82,7 @@ namespace DogGo.Repositories
                             Duration = reader.GetInt32(reader.GetOrdinal("Duration")),
                             WalkerId = reader.GetInt32(reader.GetOrdinal("WalkerId")),
                             DogId = reader.GetInt32(reader.GetOrdinal("DogId")),
-                            OwnerName = reader.GetString(reader.GetOrdinal("OwnerName")) 
+                            OwnerId = reader.GetString(reader.GetOrdinal("OwnerId")) 
                         };
                         walks.Add(walk);
                     }
