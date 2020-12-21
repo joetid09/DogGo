@@ -6,7 +6,7 @@
 
 <h1>New Appointment</h1>
 <div class="text-black-50">
-    <h4>Results here: @Html.DisplayFor(model => model.Walker.Name)</h4>
+    <h4>Would you like to make an appointment with @Html.DisplayFor(model => model.Walker.Name)?</h4>
     </div>
 @*<h4>Let's make an appointment with<span asp-validation-for="Walker"></span></h4>*@
 <hr />
@@ -22,21 +22,23 @@
             </div>
             
             @*<div class="form-group">
-                <label asp-for="Owner.Address" class="control-label"></label>
+                <label asp-for="" class="control-label"></label>
                 <input asp-for="Owner.Address" class="form-control" />
                 <span asp-validation-for="Owner.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Owner.NeighborhoodId" class="control-label"></label>
-                <select asp-for="Owner.NeighborhoodId" class="form-control">
-                    <option value="">Select Neighborhood</option>
-                    @foreach (Neighborhood neighborhood in Model.Neighborhood)
-                    {
-                        <option value="@neighborhood.Id">@neighborhood.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="Owner.NeighborhoodId" class="text-danger"></span>
             </div>*@
+            <div class="form-group">
+                <label asp-for="Walk.DogId" class="control-label"></label>
+                <select asp-for="Walk.DogId" class="form-control">
+                    <option value="">Choose a dog</option>
+             
+                    @foreach (Dog dog in Model.Doggos)
+                    {
+                        <option value="@dog.Id">@dog.Name</option>
+                    }
+                    
+                </select>
+                <span asp-validation-for="Walk.DogId" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

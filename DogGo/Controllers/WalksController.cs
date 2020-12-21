@@ -45,7 +45,7 @@ namespace DogGo.Controllers
             {
                 OwnerId = ownerId,
                 Walker = walker,
-                Dog = dogs
+                Doggos = dogs
             };
             return View(avm);
         }
@@ -62,7 +62,7 @@ namespace DogGo.Controllers
             }
             catch
             {
-                return View();
+                return View("Create");
             }
         }
 
