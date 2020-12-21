@@ -9,7 +9,8 @@ namespace DogGo.Models.ViewModels
     {
         public int OwnerId { get; set; }
         public Walker Walker { get; set; }
-        public List<Dog> Dog { get; set; }
+        public List<Dog> Doggos { get; set; }
+        public Walks Walk { get; set; }
 
     }
 }
