@@ -6,6 +6,9 @@ using DogGo.Models;
 using DogGo.Models.ViewModels;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace DogGo.Controllers
 {
@@ -22,6 +25,40 @@ namespace DogGo.Controllers
             _walksRepo = WalksRepository;
             _ownerRepo = ownerRepository;
             _neighborhoodRepo = neighborhoodRepository;
+        }
+
+        //Login action for doggo info
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login(LoginViewModel viewModel)
+        {
+            Walker walker = _walkerRepo.GetWalkerByEmail(viewModel.Email);
+
+            if(walker == null)
+            {
+                return Unauthorized();
+            }
+
+            List<Claim> claims = new List<Claim>
+            {
+               new Claim(ClaimTypes.NameIdentifier, walker.Id.ToString()),
+               new Claim(ClaimTypes.Email, walker.Email),
+               new Claim(ClaimTypes.Role, "Walker")
+            };
+
+            ClaimsIdentity claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity));
+
+            return RedirectToAction("Index", "Dogs");
         }
         // GET: WalkersController
         //sets action of Index() so that when it is call in StartUp.cs it will show list of walkers

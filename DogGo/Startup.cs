@@ -28,6 +28,7 @@ namespace DogGo
             services.AddControllersWithViews();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => options.LoginPath = "/Owners/LogIn");
+                //.AddCookie(options => options.LoginPath = "/Walkers/LogIn");
             services.AddControllersWithViews();
             //this service lets the program know about our new repositories
             services.AddTransient<IWalkerRepository, WalkerRepository>();
