@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using DogGo.Models.ViewModels;
 using System.Security.Claims;
+using System;
 
 namespace DogGo.Controllers
 {
@@ -53,16 +54,25 @@ namespace DogGo.Controllers
         // POST: WalksController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Walks walk)
+        public ActionResult Create(AppointmentViewModel avm)
         {
             try
             {
-                _walksRepository.AddWalk(walk);
+                _walksRepository.AddWalk(avm.Walk);
                 return RedirectToAction("Details", "Owners");
             }
-            catch
+            catch(Exception ex)
             {
-                return View("Create");
+                int ownerId = GetCurrentOwner();
+                List<Dog> dogs = _dogRepository.GetDogsByOwnerId(ownerId);
+
+                avm = new AppointmentViewModel
+                {
+                    OwnerId = ownerId,
+                    Doggos = dogs,
+                    ErrorMessage = "Oh no, seems something is wrong. Please ensure the form is filled out completely"
+                };
+                return View(avm);
             }
         }
 

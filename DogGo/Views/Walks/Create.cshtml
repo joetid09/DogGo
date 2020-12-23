@@ -5,6 +5,12 @@
 }
 
 <h1>New Appointment</h1>
+
+@if(!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
 <div class="text-black-50">
     <h4>Would you like to make an appointment with @Html.DisplayFor(model => model.Walker.Name)?</h4>
     </div>
@@ -14,8 +20,12 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Walk.WalkerId" class="form-control" value="@Model.Walker.Id" >
+          @*<input type="hidden" asp-for="Walk.WalkerId" class="form-control" value="@Model.Walker.Id" >*@
             <input type="hidden" asp-for="Walk.OwnerId" class="form-control" value="@Model.OwnerId">
+
+            <label asp-for="Walk.Date" class="control-label"></label>
+            <input type="datetime" asp-for="Walk.Date" class="form-control" />
+
 
             @*<div class="form-group">
             <label asp-for="" class="control-label"></label>
