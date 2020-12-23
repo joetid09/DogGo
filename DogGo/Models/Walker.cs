@@ -9,6 +9,8 @@ namespace DogGo.Models
         [MaxLength(35)]
         public string Name { get; set; }
         [Required(ErrorMessage ="What part of town do you work in?")]
+
+        public string Email { get; set; }
         public int NeighborhoodId { get; set; }
         public string ImageUrl { get; set; }
         public Neighborhood Neighborhood { get; set; }
