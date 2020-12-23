@@ -54,7 +54,7 @@ namespace DogGo.Controllers
         // POST: WalksController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AppointmentViewModel avm)
+        public ActionResult Create(AppointmentViewModel avm, int id)
         {
             try
             {
@@ -63,12 +63,14 @@ namespace DogGo.Controllers
             }
             catch(Exception ex)
             {
+                Walker walker = _walkerRepository.GetWalkerById(id);
                 int ownerId = GetCurrentOwner();
                 List<Dog> dogs = _dogRepository.GetDogsByOwnerId(ownerId);
 
                 avm = new AppointmentViewModel
                 {
                     OwnerId = ownerId,
+                    Walker = walker,
                     Doggos = dogs,
                     ErrorMessage = "Oh no, seems something is wrong. Please ensure the form is filled out completely"
                 };

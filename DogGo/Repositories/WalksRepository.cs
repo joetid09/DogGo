@@ -33,15 +33,15 @@ namespace DogGo.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Walks (Date, WalkerId, DogId, WalkStatusId, WalkerId) 
+                    cmd.CommandText = @"INSERT INTO Walks (Date, Duration, DogId, WalkerId, WalkStatusId) 
                                         OUTPUT INSERTED.ID
-                                        Values (@date, @dogid, @ownerid, @walkstatusid, @walkerid );
+                                        Values (@date, @duration, @dogid, @walkerid, @walkstatusid );
                                         ";
 
-                    cmd.Parameters.AddWithValue("date", walk.Date);
+                    cmd.Parameters.AddWithValue("@date", walk.Date);
+                    cmd.Parameters.AddWithValue("@duration", walk.Duration);
                     cmd.Parameters.AddWithValue("@dogid", walk.DogId);
-                    cmd.Parameters.AddWithValue("@ownerid", walk.OwnerId);
-                    cmd.Parameters.AddWithValue("walkerid", walk.WalkerId);
+                    cmd.Parameters.AddWithValue("@walkerid", walk.WalkerId);
                     cmd.Parameters.AddWithValue("@walkstatusid", 1);
 
                     int id = (int)cmd.ExecuteScalar();
@@ -82,7 +82,7 @@ namespace DogGo.Repositories
                             Duration = reader.GetInt32(reader.GetOrdinal("Duration")),
                             WalkerId = reader.GetInt32(reader.GetOrdinal("WalkerId")),
                             DogId = reader.GetInt32(reader.GetOrdinal("DogId")),
-                            OwnerId = reader.GetString(reader.GetOrdinal("OwnerId")) 
+                            OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")) 
                         };
                         walks.Add(walk);
                     }
