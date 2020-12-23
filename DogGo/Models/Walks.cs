@@ -12,6 +12,6 @@ namespace DogGo.Models
         public int Duration { get; set; }
         public int WalkerId { get; set; }
         public int DogId { get; set; }
-        public string OwnerId { get; set; }
+        public int OwnerId { get; set; }
     }
 }
