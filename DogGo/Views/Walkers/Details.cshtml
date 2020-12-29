@@ -24,8 +24,8 @@
                     <thead>
                         <tr>
                             <th scope="col">Date</th>
-                            <th scope="col">Client</th>
                             <th scope="col">Duration</th>
+                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,22 +36,23 @@
                             <td>@walk.Duration</td>
                             @if (walk.WalkStatusId == 1)
                             {
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", "Walks", new { id = walk.Id }) |
-                        </td>
+                                <td>
+                                    <h5>Pending</h5>
+                                </td>
                             }
                             else if (walk.WalkStatusId == 2)
                             {
-                        <td>
-                            <h5>Accepted</h5>
-                        </td>
+                                <td>
+                                    <h5>Accepted</h5>
+                                </td>
                             }
                             else if (walk.WalkStatusId == 3)
                             {
-                        <td>
-                            <h5>Completed!</h5>
-                        </td>
+                                <td>
+                                    <h5>Completed!</h5>
+                                </td>
                             }
+                        <td>@Html.ActionLink("Update Status", "Edit", "Walks", new { id = walk.Id })</td>
                         </tr>
                         }
                     </tbody>
