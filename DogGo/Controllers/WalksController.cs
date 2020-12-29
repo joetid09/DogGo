@@ -94,9 +94,8 @@ namespace DogGo.Controllers
 
             try
             {
-                walk = _walksRepository.GetWalkById(id);
                 _walksRepository.UpdateWalk(walk);
-                return RedirectToAction("Details", "Walkers", new { id = walk.WalkerId});
+                return RedirectToAction("Details", "Walkers");
             }
             catch
             {

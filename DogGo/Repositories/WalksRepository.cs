@@ -129,7 +129,7 @@ namespace DogGo.Repositories
                 }
             }
         }
-                public void UpdateWalk(Walks walk)
+        public void UpdateWalk(Walks walk)
         {
             using (SqlConnection conn = Connection)
             {
@@ -139,14 +139,18 @@ namespace DogGo.Repositories
                 {
                     cmd.CommandText = @"
                                        UPDATE Walks
-                                      Set 
+                                        SET
                                         WalkStatusId = @statusId,
                                         Duration = @duration,
+                                        WalkerId = @walker,
+                                        DogId = @dog
                                         WHERE Id = @id
                                         ";
 
                     cmd.Parameters.AddWithValue("@statusId", walk.WalkStatusId);
                     cmd.Parameters.AddWithValue("@duration", walk.Duration);
+                    cmd.Parameters.AddWithValue("@walker", walk.WalkerId);
+                    cmd.Parameters.AddWithValue("@dog", walk.DogId);
                     cmd.Parameters.AddWithValue("@id", walk.Id);
 
                     cmd.ExecuteNonQuery();

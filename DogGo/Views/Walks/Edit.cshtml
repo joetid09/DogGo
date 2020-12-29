@@ -12,14 +12,21 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="Id" class="control-label"></label>
                 <input asp-for="Id" type="hidden" class="form-control" />
                 <input type="hidden" asp-for="DogId" class="form-control" value="@Model.DogId" />
-                <input type="hidden" asp-for="WalkerId" class="form-control" value="@Model.WalkerId" />
-
-
-            </div>
+                <input type="hidden" asp-for="WalkerId" class="form-control" value="@Model.WalkerId" />*@
+                <div class="form-group">
+                    <input asp-for="DogId" type="hidden" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input asp-for="WalkerId" type="hidden" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input asp-for="Id" type="hidden" class="form-control" />
+                </div>
+            @*</div>*@
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>
                 <input asp-for="Duration" class="form-control" />
