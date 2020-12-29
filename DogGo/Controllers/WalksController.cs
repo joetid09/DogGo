@@ -81,17 +81,21 @@ namespace DogGo.Controllers
         // GET: WalksController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Walks walk = _walksRepository.GetWalkById(id);
+            
+            return View(walk);
         }
 
         // POST: WalksController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Walks walk)
         {
+
             try
             {
-                return RedirectToAction(nameof(Index));
+                _walksRepository.UpdateWalk(walk);
+                return RedirectToAction("Details", "Walkers");
             }
             catch
             {

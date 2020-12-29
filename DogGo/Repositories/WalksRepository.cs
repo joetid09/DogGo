@@ -60,7 +60,8 @@ namespace DogGo.Repositories
 
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"SELECT Walks.Id, Date, Duration, WalkerId, DogId, Owner.Id as OwnerId From Walks
+                    cmd.CommandText = @"SELECT Walks.Id, Date, Duration, WalkerId, DogId, Owner.Id as OwnerId, WalkStatusId
+                                        From Walks
                                         LEFT JOIN Dog
                                         ON Dog.Id = Walks.DogId
                                         LEFT JOIN Owner
@@ -82,7 +83,7 @@ namespace DogGo.Repositories
                             Duration = reader.GetInt32(reader.GetOrdinal("Duration")),
                             WalkerId = reader.GetInt32(reader.GetOrdinal("WalkerId")),
                             DogId = reader.GetInt32(reader.GetOrdinal("DogId")),
-                            OwnerId = reader.GetInt32(reader.GetOrdinal("OwnerId")) 
+                            WalkStatusId = reader.GetInt32(reader.GetOrdinal("WalkStatusId"))
                         };
                         walks.Add(walk);
                     }
@@ -93,5 +94,69 @@ namespace DogGo.Repositories
 
             }
         }
+        public Walks GetWalkById(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT *
+                                        From Walks
+                                        WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        Walks walk = new Walks()
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Duration = reader.GetInt32(reader.GetOrdinal("Duration")),
+                            WalkStatusId = reader.GetInt32(reader.GetOrdinal("WalkStatusId")),
+                            DogId = reader.GetInt32(reader.GetOrdinal("DogId")),
+                            WalkerId = reader.GetInt32(reader.GetOrdinal("WalkerId"))
+
+                        };
+                        reader.Close();
+                        return walk;
+                    }
+                    reader.Close();
+                    return null;
+                }
+            }
+        }
+        public void UpdateWalk(Walks walk)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                       UPDATE Walks
+                                        SET
+                                        WalkStatusId = @statusId,
+                                        Duration = @duration,
+                                        WalkerId = @walker,
+                                        DogId = @dog
+                                        WHERE Id = @id
+                                        ";
+
+                    cmd.Parameters.AddWithValue("@statusId", walk.WalkStatusId);
+                    cmd.Parameters.AddWithValue("@duration", walk.Duration);
+                    cmd.Parameters.AddWithValue("@walker", walk.WalkerId);
+                    cmd.Parameters.AddWithValue("@dog", walk.DogId);
+                    cmd.Parameters.AddWithValue("@id", walk.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }
