@@ -58,16 +58,21 @@ namespace DogGo.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
 
-            return RedirectToAction("Index", "Dogs");
+            return RedirectToAction("Details", "Walkers");
         }
         // GET: WalkersController
         //sets action of Index() so that when it is call in StartUp.cs it will show list of walkers
+
+        //public ActionResult AssociatedWalks()
+        //{
+
+        //}
         public ActionResult Index()
         {
 
             if (User.Identity.IsAuthenticated)
             {
-                int id = GetCurrentOwner();
+                int id = GetCurrentWalker();
                 Owner owner = _ownerRepo.GetOwnerById(id);
                 List<Walker> walkers = _walkerRepo.GetWalkersInNeighborhood(owner.NeighborhoodId);
                 List<Neighborhood> neighborhood = _neighborhoodRepo.GetNeighborhoodsById(owner.NeighborhoodId);
@@ -96,9 +101,11 @@ namespace DogGo.Controllers
         // GET: WalkersController/Details/5
         public ActionResult Details(int id)
         {
-            Walker walker = _walkerRepo.GetWalkerById(id);
+            int walkerId = GetCurrentWalker();
 
-            List<Walks> walks = _walksRepo.GetWalksByWalker(id);
+            Walker walker = _walkerRepo.GetWalkerById(walkerId);
+
+            List<Walks> walks = _walksRepo.GetWalksByWalker(walkerId);
 
             WalkerProfileViewModel vm = new WalkerProfileViewModel
             {
@@ -176,7 +183,7 @@ namespace DogGo.Controllers
             }
         }
 
-        public int GetCurrentOwner()
+        public int GetCurrentWalker()
         {        
             int id = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return id;
