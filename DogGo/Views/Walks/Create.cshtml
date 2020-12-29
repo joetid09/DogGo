@@ -21,7 +21,6 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
           <input type="hidden" asp-for="Walk.WalkerId" class="form-control" value="@Model.Walker.Id" >
-            <input type="hidden" asp-for="Walk.OwnerId" class="form-control" value="@Model.OwnerId">
 
             <label asp-for="Walk.Date" class="control-label"></label>
             <input type="date" asp-for="Walk.Date" class="form-control" />

@@ -70,7 +70,7 @@ namespace DogGo.Controllers
         public ActionResult Index()
         {
 
-            if (User.Identity.IsAuthenticated)
+            if (User.IsInRole("Walker") && User.Identity.IsAuthenticated)
             {
                 int id = GetCurrentWalker();
                 Owner owner = _ownerRepo.GetOwnerById(id);
@@ -97,6 +97,7 @@ namespace DogGo.Controllers
                 return View(vm);
             }
         }
+
 
         // GET: WalkersController/Details/5
         public ActionResult Details(int id)
