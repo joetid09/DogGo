@@ -129,7 +129,7 @@ namespace DogGo.Repositories
                 }
             }
         }
-        public Walks GetWalkByDogId(int dogId)
+        public List<Walks> GetWalkByDogId(int dogId)
         {
             using (SqlConnection conn = Connection)
             {

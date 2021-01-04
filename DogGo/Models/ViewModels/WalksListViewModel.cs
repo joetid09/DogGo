@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DogGo.Models.ViewModels
 {
-    public class LoginViewModel
+    public class WalksListViewModels
     {
-        List<Dog> Dogs { get; set; }
-        List<Walks> Walks { get; set; }
-        List<Owner> Owners { get; set; }
+        public List<Dog> Dogs { get; set; }
+        public List<Walks> Walks { get; set; }
+        public List<Owner> Owners { get; set; }
     }
 }
